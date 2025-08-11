@@ -7,11 +7,11 @@ object FlightsResponseMapper {
 
     fun listFlightsResponse(flights: List<Flight>) = flights.map {
         ListFlightsResponse(
-            airline = it.airline,
-            supplier = it.supplier,
-            fare = it.fare,
-            departureAirportCode = it.departureAirportCode,
-            destinationAirportCode = it.destinationAirportCode,
+            airline = it.airline.value,
+            supplier = it.supplier.value,
+            fare = it.fare.value,
+            departureAirportCode = it.departureAirportCode.value,
+            destinationAirportCode = it.destinationAirportCode.value,
             departureDate = it.departureDate,
             arrivalDate = it.arrivalDate,
         )

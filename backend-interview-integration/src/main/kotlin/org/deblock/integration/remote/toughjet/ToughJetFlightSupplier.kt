@@ -25,5 +25,7 @@ class ToughJetFlightSupplier(
 
     override fun flights(response: ToughJetListResponse): List<Flight> = response
         .results
-        .map { it.flight() }
+        .map {
+            it.flight(ToughJetDiscountedPriceCalculator.calculate(it))
+        }
 }
