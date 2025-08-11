@@ -15,11 +15,14 @@ subprojects {
     apply(plugin = "org.jetbrains.kotlin.jvm")
 
     dependencies {
-        implementation("io.ktor:ktor-client-core:3.2.3")
+        implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.10.2")
+        implementation("io.github.microutils:kotlin-logging-jvm:3.0.5")
 
-        testImplementation("org.springframework.boot:spring-boot-starter-test") {
-            exclude(group = "org.junit.vintage", module = "junit-vintage-engine")
-        }
+        testImplementation("org.assertj:assertj-core:3.27.4")
+        testImplementation(platform("org.junit:junit-bom:5.13.4"))
+        testImplementation("org.junit.jupiter:junit-jupiter")
+
+        testRuntimeOnly("org.junit.platform:junit-platform-launcher")
     }
 
     tasks.withType<Test> {

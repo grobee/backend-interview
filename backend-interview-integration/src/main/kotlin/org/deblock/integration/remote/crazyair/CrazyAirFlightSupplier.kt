@@ -1,27 +1,26 @@
 package org.deblock.integration.remote.crazyair
 
 import org.deblock.domain.flightsupplier.FlightSupplierRequest
+import org.deblock.domain.http.HttpClient
 import org.deblock.domain.model.Flight
 import org.deblock.integration.remote.RemoteHttpFlightSuppler
 import org.deblock.integration.remote.crazyair.CrazyAirListResponseMapper.flight
-import org.springframework.web.client.RestClient
-import org.springframework.web.util.UriBuilder
 
 class CrazyAirFlightSupplier(
-    restClient: RestClient,
+    httpClient: HttpClient,
     override val supplyEndpointPath: String = "/list",
 ) : RemoteHttpFlightSuppler<CrazyAirListResponse>(
-    restClient,
+    httpClient,
     CrazyAirListResponse::class.java,
 ) {
 
-    override fun UriBuilder.queryParams(request: FlightSupplierRequest) = apply {
-        queryParam("origin", request.origin)
-        queryParam("destination", request.destination)
-        queryParam("departureDate", request.departureDate.toString())
-        queryParam("returnDate", request.returnDate.toString())
-        queryParam("passengerCount", request.numberOfPassengers.toString())
-    }
+    override fun queryParams(request: FlightSupplierRequest) = mapOf(
+        "origin" to request.origin,
+        "destination" to request.destination,
+        "departureDate" to request.departureDate.toString(),
+        "returnDate" to request.returnDate.toString(),
+        "passengerCount" to request.numberOfPassengers.toString(),
+    )
 
     override fun flights(response: CrazyAirListResponse): List<Flight> = response
         .results

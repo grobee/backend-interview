@@ -1,0 +1,32 @@
+[
+  {
+    "carrier": "KLM",
+    "basePrice": "120.00",
+    "tax": "10.00",
+    "discount": 5,
+    "departureAirportName": "BUD",
+    "arrivalAirportName": "BEG",
+    "outboundDateTime": "2025-09-15T19:00:00Z",
+    "inboundDateTime": "2025-09-15T22:00:00Z"
+  },
+  {
+    "carrier": "EMIRATES",
+    "basePrice": "220.00",
+    "tax": "25.00",
+    "discount": 5,
+    "departureAirportName": "BEG",
+    "arrivalAirportName": "BCN",
+    "outboundDateTime": "2025-10-29T13:00:00Z",
+    "inboundDateTime": "2025-10-30T20:00:00Z"
+  },
+  {
+    "carrier": "IBERIA",
+    "basePrice": "200.00",
+    "tax": "21.00",
+    "discount": 10,
+    "departureAirportName": "MAD",
+    "arrivalAirportName": "BEG",
+    "outboundDateTime": "2025-08-30T14:00:00Z",
+    "inboundDateTime": "2025-08-30T19:00:00Z"
+  }
+]

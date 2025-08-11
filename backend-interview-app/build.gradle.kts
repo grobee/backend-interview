@@ -17,10 +17,15 @@ dependencies {
     implementation(project(":backend-interview-domain"))
     implementation(project(":backend-interview-integration"))
 
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-reactor:1.10.2")
     implementation("org.springframework.boot:spring-boot-starter-web")
+    implementation("org.springframework.boot:spring-boot-starter-webflux:3.5.4")
     implementation("org.springframework.boot:spring-boot-starter-validation")
-    implementation("org.springframework:spring-web")
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin:2.19.2")
 
     testImplementation("org.wiremock:wiremock-standalone:3.9.1")
+    testImplementation("org.springframework.boot:spring-boot-starter-test") {
+        exclude(group = "org.junit.vintage", module = "junit-vintage-engine")
+    }
+    testImplementation("net.javacrumbs.json-unit:json-unit-assertj:4.1.1")
 }

@@ -11,7 +11,7 @@ import org.deblock.domain.model.Flight
 
 object ToughJetFlightResponseMapper {
 
-    private const val SUPPLIER_NAME = "ToughJet"
+    private const val SUPPLIER_NAME = "TOUGH_JET"
 
     fun ToughJetListResponse.Result.flight(discountedPrice: BigDecimal) = Flight(
         airline = Airline(carrier),

@@ -8,7 +8,7 @@ import org.deblock.domain.model.Flight
 
 object CrazyAirListResponseMapper {
 
-    private const val SUPPLIER_NAME = "CrazyAir"
+    private const val SUPPLIER_NAME = "CRAZY_AIR"
 
     fun CrazyAirListResponse.Result.flight() = Flight(
         airline = Airline(airline),

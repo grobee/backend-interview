@@ -1,0 +1,56 @@
+[
+  {
+    "airline": "EASYJET",
+    "supplier": "CRAZY_AIR",
+    "fare": 120.45,
+    "departureAirportCode": "BUD",
+    "destinationAirportCode": "LON",
+    "departureDate": "2025-09-01T21:00:00",
+    "arrivalDate": "2025-09-01T23:00:00"
+  },
+  {
+    "airline": "KLM",
+    "supplier": "TOUGH_JET",
+    "fare": 124.00,
+    "departureAirportCode": "BUD",
+    "destinationAirportCode": "BEG",
+    "departureDate": "2025-09-15T19:00:00",
+    "arrivalDate": "2025-09-15T22:00:00"
+  },
+  {
+    "airline": "RYANAIR",
+    "supplier": "CRAZY_AIR",
+    "fare": 200.25,
+    "departureAirportCode": "BUD",
+    "destinationAirportCode": "MAD",
+    "departureDate": "2025-08-10T20:00:00",
+    "arrivalDate": "2025-08-10T22:00:00"
+  },
+  {
+    "airline": "IBERIA",
+    "supplier": "TOUGH_JET",
+    "fare": 201.00,
+    "departureAirportCode": "MAD",
+    "destinationAirportCode": "BEG",
+    "departureDate": "2025-08-30T14:00:00",
+    "arrivalDate": "2025-08-30T19:00:00"
+  },
+  {
+    "airline": "EMIRATES",
+    "supplier": "TOUGH_JET",
+    "fare": 234.00,
+    "departureAirportCode": "BEG",
+    "destinationAirportCode": "BCN",
+    "departureDate": "2025-10-29T13:00:00",
+    "arrivalDate": "2025-10-30T20:00:00"
+  },
+  {
+    "airline": "AIR_FRANCE",
+    "supplier": "CRAZY_AIR",
+    "fare": 250.90,
+    "departureAirportCode": "BUD",
+    "destinationAirportCode": "BEG",
+    "departureDate": "2025-10-05T15:00:00",
+    "arrivalDate": "2025-10-05T17:00:00"
+  }
+]

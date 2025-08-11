@@ -1,14 +1,17 @@
 package org.deblock.org.deblock.app
 
 import com.github.tomakehurst.wiremock.WireMockServer
-import com.github.tomakehurst.wiremock.client.WireMock.equalTo
 import com.github.tomakehurst.wiremock.client.WireMock.get
 import com.github.tomakehurst.wiremock.client.WireMock.ok
 import com.github.tomakehurst.wiremock.client.WireMock.urlPathEqualTo
-import java.time.Instant
 import java.time.LocalDate
-import java.time.LocalDateTime
-import java.time.LocalTime
+import net.javacrumbs.jsonunit.assertj.JsonAssertions.json
+import net.javacrumbs.jsonunit.assertj.assertThatJson
+import org.deblock.org.deblock.app.helpers.JsonTestData
+import org.deblock.org.deblock.app.helpers.JsonTestData.EMPTY_JSON_BODY
+import org.deblock.org.deblock.app.helpers.RequestParamsUtils.crazyAirRequestQueryParams
+import org.deblock.org.deblock.app.helpers.RequestParamsUtils.toQueryString
+import org.deblock.org.deblock.app.helpers.RequestParamsUtils.toughJetRequestQueryParams
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
@@ -22,13 +25,11 @@ class FlightsControllerTest {
     @Autowired
     private lateinit var restTemplate: TestRestTemplate
 
-    private val crazyAirMockServer: WireMockServer = WireMockServer(8085)
-        .apply { start() }
-    private val toughJetMockServer: WireMockServer = WireMockServer(8086)
-        .apply { start() }
+    private val crazyAirMockServer = WireMockServer(8085).apply { start() }
+    private val toughJetMockServer = WireMockServer(8086).apply { start() }
 
     @Test
-    fun test() {
+    fun `should return empty response when all the suppliers have empty responses present`() {
         // given
         val origin = "origin"
         val destination = "destination"
@@ -39,72 +40,115 @@ class FlightsControllerTest {
         crazyAirMockServer.stubFor(
             get(urlPathEqualTo("/list"))
                 .withQueryParams(
-                    mapOf(
-                        "origin" to equalTo(origin),
-                        "destination" to equalTo(destination),
-                        "departureDate" to equalTo(departureDate.toString()),
-                        "returnDate" to equalTo(returnDate.toString()),
-                        "passengerCount" to equalTo("$numOfPassengers")
-                    )
+                    crazyAirRequestQueryParams(origin, destination, departureDate, returnDate, numOfPassengers)
                 )
                 .willReturn(
                     ok()
                         .withHeader("Content-Type", APPLICATION_JSON.toString())
-                        //language=JSON
-                        .withBody(
-                            """[
-                                          {
-                                            "airline": "WizzAir",
-                                            "price": 500,
-                                            "cabinClass": "EE",
-                                            "departureAirportCode": "AET",
-                                            "destinationAirportCode": "BUD",
-                                            "departureDate": "${LocalDateTime.of(departureDate, LocalTime.now())}",
-                                            "arrivalDate": "${LocalDateTime.of(returnDate, LocalTime.now())}"
-                                          }
-                                    ]""".trimIndent()
-                        )
+                        .withBody(EMPTY_JSON_BODY)
                 )
         )
         toughJetMockServer.stubFor(
             get(urlPathEqualTo("/list"))
                 .withQueryParams(
-                    mapOf(
-                        "from" to equalTo(origin),
-                        "to" to equalTo(destination),
-                        "outboundDate" to equalTo(departureDate.toString()),
-                        "inboundDate" to equalTo(returnDate.toString()),
-                        "numberOfAdults" to equalTo("$numOfPassengers")
-                    )
+                    toughJetRequestQueryParams(origin, destination, departureDate, returnDate, numOfPassengers)
                 )
                 .willReturn(
                     ok()
                         .withHeader("Content-Type", APPLICATION_JSON.toString())
-                        //language=JSON
-                        .withBody(
-                            """[
-                                          {
-                                            "carrier": "WizzAir",
-                                            "basePrice": 700,
-                                            "tax": 20,
-                                            "discount": 5,
-                                            "departureAirportName": "BUK",
-                                            "arrivalAirportName": "BUD",
-                                            "outboundDateTime": "${Instant.now()}",
-                                            "inboundDateTime": "${Instant.now()}"
-                                          }
-                                    ]""".trimIndent()
-                        )
+                        .withBody(EMPTY_JSON_BODY)
                 )
         )
 
-        val params = "origin=$origin&destination=$destination&departureDate=$departureDate" +
-            "&returnDate=$returnDate&numberOfPassengers=$numOfPassengers"
-
         // when
+        val params = toQueryString(origin, destination, departureDate, returnDate, numOfPassengers)
         val response = restTemplate.getForEntity("/flights?$params", String::class.java)
 
         // then
-        println(response)
+        assertThatJson(checkNotNull(response.body))
+            .isEqualTo(json(EMPTY_JSON_BODY))
+    }
+
+
+    @Test
+    fun `should return all available flights when all the suppliers have responses present`() {
+        // given
+        val origin = "origin"
+        val destination = "destination"
+        val departureDate = LocalDate.now()
+        val returnDate = LocalDate.now()
+        val numOfPassengers = 2
+
+        crazyAirMockServer.stubFor(
+            get(urlPathEqualTo("/list"))
+                .withQueryParams(
+                    crazyAirRequestQueryParams(origin, destination, departureDate, returnDate, numOfPassengers)
+                )
+                .willReturn(
+                    ok()
+                        .withHeader("Content-Type", APPLICATION_JSON.toString())
+                        .withBody(JsonTestData.Full.crazyAirResponse)
+                )
+        )
+        toughJetMockServer.stubFor(
+            get(urlPathEqualTo("/list"))
+                .withQueryParams(
+                    toughJetRequestQueryParams(origin, destination, departureDate, returnDate, numOfPassengers)
+                )
+                .willReturn(
+                    ok()
+                        .withHeader("Content-Type", APPLICATION_JSON.toString())
+                        .withBody(JsonTestData.Full.toughJetResponse)
+                )
+        )
+
+        // when
+        val params = toQueryString(origin, destination, departureDate, returnDate, numOfPassengers)
+        val response = restTemplate.getForEntity("/flights?$params", String::class.java)
+
+        // then
+        assertThatJson(checkNotNull(response.body))
+            .isEqualTo(json(JsonTestData.Full.expectedResponse))
+    }
+
+    @Test
+    fun `should return available flights when only some of the suppliers have responses present`() {
+        // given
+        val origin = "origin"
+        val destination = "destination"
+        val departureDate = LocalDate.now()
+        val returnDate = LocalDate.now()
+        val numOfPassengers = 2
+
+        crazyAirMockServer.stubFor(
+            get(urlPathEqualTo("/list"))
+                .withQueryParams(
+                    crazyAirRequestQueryParams(origin, destination, departureDate, returnDate, numOfPassengers)
+                )
+                .willReturn(
+                    ok()
+                        .withHeader("Content-Type", APPLICATION_JSON.toString())
+                        .withBody(JsonTestData.Full.crazyAirResponse)
+                )
+        )
+        toughJetMockServer.stubFor(
+            get(urlPathEqualTo("/list"))
+                .withQueryParams(
+                    toughJetRequestQueryParams(origin, destination, departureDate, returnDate, numOfPassengers)
+                )
+                .willReturn(
+                    ok()
+                        .withHeader("Content-Type", APPLICATION_JSON.toString())
+                        .withBody(EMPTY_JSON_BODY)
+                )
+        )
+
+        // when
+        val params = toQueryString(origin, destination, departureDate, returnDate, numOfPassengers)
+        val response = restTemplate.getForEntity("/flights?$params", String::class.java)
+
+        // then
+        assertThatJson(checkNotNull(response.body))
+            .isEqualTo(json(JsonTestData.Full.expectedResponse))
     }
 }

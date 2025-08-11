@@ -4,5 +4,5 @@ import org.deblock.domain.model.Flight
 
 interface FlightSupplier {
 
-    fun supply(request: FlightSupplierRequest): List<Flight>
+    suspend fun supply(request: FlightSupplierRequest): List<Flight>
 }

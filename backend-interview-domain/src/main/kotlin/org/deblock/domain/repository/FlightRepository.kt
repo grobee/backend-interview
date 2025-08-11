@@ -5,5 +5,5 @@ import org.deblock.domain.model.ListFlightsQuery
 
 interface FlightRepository {
 
-    fun getAll(query: ListFlightsQuery): List<Flight>
+    suspend fun getAll(query: ListFlightsQuery): List<Flight>
 }
