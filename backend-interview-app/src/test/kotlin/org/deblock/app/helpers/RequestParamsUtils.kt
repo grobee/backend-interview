@@ -2,6 +2,7 @@ package org.deblock.org.deblock.app.helpers
 
 import com.github.tomakehurst.wiremock.client.WireMock.equalTo
 import java.time.LocalDate
+import java.time.LocalDateTime
 
 object RequestParamsUtils {
 
@@ -38,6 +39,15 @@ object RequestParamsUtils {
         destination: String,
         departureDate: LocalDate,
         returnDate: LocalDate,
+        numOfPassengers: Int
+    ) = "origin=$origin&destination=$destination&departureDate=$departureDate" +
+        "&returnDate=$returnDate&numberOfPassengers=$numOfPassengers"
+
+    fun toQueryString(
+        origin: String,
+        destination: String,
+        departureDate: LocalDateTime,
+        returnDate: LocalDateTime,
         numOfPassengers: Int
     ) = "origin=$origin&destination=$destination&departureDate=$departureDate" +
         "&returnDate=$returnDate&numberOfPassengers=$numOfPassengers"

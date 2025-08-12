@@ -2,9 +2,9 @@ import org.springframework.boot.gradle.plugin.SpringBootPlugin
 
 plugins {
     `java-library`
-    kotlin("plugin.spring") version "2.0.20"
-    id("org.springframework.boot") version "3.5.4"
-    id("io.spring.dependency-management") version "1.1.7"
+    alias(libs.plugins.kotlin.spring)
+    alias(libs.plugins.spring.framework.boot)
+    alias(libs.plugins.spring.dependency.management)
 }
 
 dependencyManagement {
@@ -17,15 +17,16 @@ dependencies {
     implementation(project(":backend-interview-domain"))
     implementation(project(":backend-interview-integration"))
 
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-reactor:1.10.2")
-    implementation("org.springframework.boot:spring-boot-starter-web")
-    implementation("org.springframework.boot:spring-boot-starter-webflux:3.5.4")
-    implementation("org.springframework.boot:spring-boot-starter-validation")
-    implementation("com.fasterxml.jackson.module:jackson-module-kotlin:2.19.2")
+    implementation(rootProject.libs.kotlinx.coroutines.reactor)
+    implementation(rootProject.libs.bundles.spring)
+    implementation(rootProject.libs.jackson.kotlin)
 
-    testImplementation("org.wiremock:wiremock-standalone:3.9.1")
-    testImplementation("org.springframework.boot:spring-boot-starter-test") {
-        exclude(group = "org.junit.vintage", module = "junit-vintage-engine")
+    testImplementation(rootProject.libs.testing.wiremock)
+    testImplementation(rootProject.libs.spring.boot.starter.test) {
+        exclude(
+            group = rootProject.libs.testing.junit.vintage.get().group,
+            module = rootProject.libs.testing.junit.vintage.get().name
+        )
     }
-    testImplementation("net.javacrumbs.json-unit:json-unit-assertj:4.1.1")
+    testImplementation(rootProject.libs.testing.junit.json.assertj)
 }

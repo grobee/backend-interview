@@ -7,26 +7,26 @@
     "departureAirportName": "BUD",
     "arrivalAirportName": "BEG",
     "outboundDateTime": "2025-09-15T19:00:00Z",
-    "inboundDateTime": "2025-09-15T22:00:00Z"
+    "inboundDateTime": "2025-09-16T22:00:00Z"
   },
   {
     "carrier": "EMIRATES",
     "basePrice": "220.00",
     "tax": "25.00",
     "discount": 5,
-    "departureAirportName": "BEG",
-    "arrivalAirportName": "BCN",
-    "outboundDateTime": "2025-10-29T13:00:00Z",
-    "inboundDateTime": "2025-10-30T20:00:00Z"
+    "departureAirportName": "BUD",
+    "arrivalAirportName": "BEG",
+    "outboundDateTime": "2025-09-15T13:00:00Z",
+    "inboundDateTime": "2025-09-16T20:00:00Z"
   },
   {
     "carrier": "IBERIA",
     "basePrice": "200.00",
     "tax": "21.00",
     "discount": 10,
-    "departureAirportName": "MAD",
+    "departureAirportName": "BUD",
     "arrivalAirportName": "BEG",
-    "outboundDateTime": "2025-08-30T14:00:00Z",
-    "inboundDateTime": "2025-08-30T19:00:00Z"
+    "outboundDateTime": "2025-09-15T14:00:00Z",
+    "inboundDateTime": "2025-09-16T19:00:00Z"
   }
 ]

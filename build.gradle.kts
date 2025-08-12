@@ -1,5 +1,7 @@
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget
+
 plugins {
-    kotlin("jvm") version "2.0.20"
+    alias(libs.plugins.kotlin.jvm)
 }
 
 group = "org.deblock"
@@ -12,17 +14,16 @@ allprojects {
 }
 
 subprojects {
-    apply(plugin = "org.jetbrains.kotlin.jvm")
+    apply(plugin = rootProject.libs.plugins.kotlin.jvm.get().pluginId)
 
     dependencies {
-        implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.10.2")
-        implementation("io.github.microutils:kotlin-logging-jvm:3.0.5")
+        implementation(rootProject.libs.kotlinx.coroutines)
+        implementation(rootProject.libs.kotlin.logging)
 
-        testImplementation("org.assertj:assertj-core:3.27.4")
-        testImplementation(platform("org.junit:junit-bom:5.13.4"))
-        testImplementation("org.junit.jupiter:junit-jupiter")
+        testImplementation(platform(rootProject.libs.testing.junit.bom))
+        testImplementation(rootProject.libs.bundles.testing)
 
-        testRuntimeOnly("org.junit.platform:junit-platform-launcher")
+        testRuntimeOnly(rootProject.libs.testing.junit.platform.launcher)
     }
 
     tasks.withType<Test> {
@@ -32,7 +33,7 @@ subprojects {
     tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
         compilerOptions {
             freeCompilerArgs.addAll("-Xjsr305=strict")
-            jvmTarget.set(org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_21)
+            jvmTarget.set(JvmTarget.JVM_21)
         }
     }
 }

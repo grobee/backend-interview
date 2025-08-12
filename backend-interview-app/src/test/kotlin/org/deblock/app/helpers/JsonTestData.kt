@@ -12,4 +12,9 @@ object JsonTestData {
         val toughJetResponse = readResourceAsString("json/full/tough-jet.json")
         val expectedResponse = readResourceAsString("json/full/response.json")
     }
+
+    object Partial {
+        val crazyAirResponse = readResourceAsString("json/partial/crazy-air.json")
+        val expectedResponse = readResourceAsString("json/partial/response.json")
+    }
 }

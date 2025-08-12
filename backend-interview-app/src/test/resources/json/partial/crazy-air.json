@@ -1,0 +1,20 @@
+[
+  {
+    "airline": "RYANAIR",
+    "price": "200.25",
+    "cabinClass": "B",
+    "departureAirportCode": "BUD",
+    "destinationAirportCode": "BEG",
+    "departureDate": "2025-09-15T18:00:00Z",
+    "arrivalDate": "2025-09-16T22:00:00"
+  },
+  {
+    "airline": "EASYJET",
+    "price": "120.45",
+    "cabinClass": "E",
+    "departureAirportCode": "BUD",
+    "destinationAirportCode": "BEG",
+    "departureDate": "2025-09-15T19:00:00Z",
+    "arrivalDate": "2025-09-16T21:00:00Z"
+  }
+]

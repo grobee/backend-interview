@@ -6,7 +6,7 @@ value class AirportCode(
 ) {
 
     init {
-        check(value.length == 3) {
+        require(value.length == 3) {
             "AirportCode must be a 3 letter IATA code"
         }
     }

@@ -1,5 +1,6 @@
 package org.deblock.integration.remote.crazyair
 
+import org.deblock.domain.flightsupplier.FlightSupplierName
 import org.deblock.domain.flightsupplier.FlightSupplierRequest
 import org.deblock.domain.http.HttpClient
 import org.deblock.domain.model.Flight
@@ -14,9 +15,11 @@ class CrazyAirFlightSupplier(
     CrazyAirListResponse::class.java,
 ) {
 
+    override val supplierName = FlightSupplierName("CRAZY_AIR")
+
     override fun queryParams(request: FlightSupplierRequest) = mapOf(
-        "origin" to request.origin,
-        "destination" to request.destination,
+        "origin" to request.origin.value,
+        "destination" to request.destination.value,
         "departureDate" to request.departureDate.toString(),
         "returnDate" to request.returnDate.toString(),
         "passengerCount" to request.numberOfPassengers.toString(),

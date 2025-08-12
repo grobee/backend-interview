@@ -1,5 +1,6 @@
 package org.deblock.org.deblock.app
 
+import java.time.Duration
 import org.deblock.domain.flightsupplier.FlightSupplier
 import org.deblock.domain.http.HttpClient
 import org.deblock.domain.repository.FlightRepository
@@ -13,19 +14,25 @@ import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.runApplication
 import org.springframework.context.annotation.Bean
 import org.springframework.web.reactive.function.client.WebClient
+import reactor.util.retry.Retry
 
 @SpringBootApplication
 class ExerciseApplication {
 
+    @Bean
+    fun httpRetryConfig(): Retry = Retry.fixedDelay(3, Duration.ofMillis(50))
+
     @Bean("crazyAirHttpClient")
     fun crazyAirHttpClient(
         @Value("\${flightsupplier.crazyair.baseURL}") crazyAirBaseURL: String,
-    ): HttpClient = WebFluxHttpClient(WebClient.create(crazyAirBaseURL))
+        httpRetryConfig: Retry,
+    ): HttpClient = WebFluxHttpClient(WebClient.create(crazyAirBaseURL), httpRetryConfig)
 
     @Bean("toughJetHttpClient")
     fun toughJetHttpClient(
         @Value("\${flightsupplier.toughjet.baseURL}") toughJetBaseURL: String,
-    ): HttpClient = WebFluxHttpClient(WebClient.create(toughJetBaseURL))
+        httpRetryConfig: Retry,
+    ): HttpClient = WebFluxHttpClient(WebClient.create(toughJetBaseURL), httpRetryConfig)
 
     @Bean
     fun flightSuppliers(

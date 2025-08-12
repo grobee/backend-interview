@@ -1,0 +1,41 @@
+[versions]
+kotlin = "2.0.20"
+kotlinx = "1.10.2"
+kotlingLogging = "3.0.5"
+assertj = "3.27.4"
+junit = "5.13.4"
+junit-json-assertj = "4.1.1"
+mockito = "3.2.0"
+jackson = "2.19.2"
+wiremock = "3.9.1"
+springBootPlugin = "3.5.4"
+springDependencyManagement = "1.1.7"
+
+[plugins]
+kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
+kotlin-spring = { id = "org.jetbrains.kotlin.plugin.spring", version.ref = "kotlin" }
+spring-framework-boot = { id = "org.springframework.boot", version.ref = "springBootPlugin" }
+spring-dependency-management = { id = "io.spring.dependency-management", version.ref = "springDependencyManagement" }
+
+[libraries]
+kotlinx-coroutines = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-core", version.ref = "kotlinx" }
+kotlinx-coroutines-reactor = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-reactor", version.ref = "kotlinx" }
+kotlin-logging = { group = "io.github.microutils", name = "kotlin-logging-jvm", version.ref = "kotlingLogging" }
+jackson-databind = { group = "com.fasterxml.jackson.core", name = "jackson-databind", version.ref = "jackson" }
+jackson-kotlin = { group = "com.fasterxml.jackson.module", name = "jackson-module-kotlin", version.ref = "jackson" }
+spring-boot-starter-web = { group = "org.springframework.boot", name = "spring-boot-starter-web" }
+spring-boot-starter-webflux = { group = "org.springframework.boot", name = "spring-boot-starter-webflux" }
+spring-boot-starter-validation = { group = "org.springframework.boot", name = "spring-boot-starter-validation" }
+spring-boot-starter-test = { group = "org.springframework.boot", name = "spring-boot-starter-test" }
+testing-assertj = { group = "org.assertj", name = "assertj-core", version.ref = "assertj" }
+testing-junit-bom = { group = "org.junit", name = "junit-bom", version.ref = "junit" }
+testing-junit-jupiter = { group = "org.junit.jupiter", name = "junit-jupiter" }
+testing-junit-platform-launcher = { group = "org.junit.platform", name = "junit-platform-launcher" }
+testing-junit-json-assertj = { group = "net.javacrumbs.json-unit", name = "json-unit-assertj", version.ref = "junit-json-assertj" }
+testing-junit-vintage = { group = "org.junit.vintage", name = "junit-vintage-engine" }
+testing-mockito = { group = "org.mockito.kotlin", name = "mockito-kotlin", version.ref = "mockito" }
+testing-wiremock = { group = "org.wiremock", name = "wiremock-standalone", version.ref = "wiremock" }
+
+[bundles]
+testing = ["testing-assertj", "testing-junit-jupiter", "testing-mockito"]
+spring = ["spring-boot-starter-validation", "spring-boot-starter-web", "spring-boot-starter-webflux"]

@@ -4,9 +4,11 @@ import kotlinx.coroutines.reactive.awaitSingle
 import org.deblock.domain.http.HttpClient
 import org.springframework.util.MultiValueMap.fromSingleValue
 import org.springframework.web.reactive.function.client.WebClient
+import reactor.util.retry.Retry
 
 class WebFluxHttpClient(
     private val webClient: WebClient,
+    private val retry: Retry,
 ) : HttpClient {
 
     override suspend fun <T> sendGet(
@@ -21,5 +23,6 @@ class WebFluxHttpClient(
         }
         .retrieve()
         .bodyToMono(responseType)
+        .retryWhen(retry)
         .awaitSingle()
 }

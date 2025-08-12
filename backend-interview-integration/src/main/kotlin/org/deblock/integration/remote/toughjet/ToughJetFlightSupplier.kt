@@ -1,5 +1,6 @@
 package org.deblock.integration.remote.toughjet
 
+import org.deblock.domain.flightsupplier.FlightSupplierName
 import org.deblock.domain.flightsupplier.FlightSupplierRequest
 import org.deblock.domain.http.HttpClient
 import org.deblock.domain.model.Flight
@@ -14,9 +15,11 @@ class ToughJetFlightSupplier(
     ToughJetListResponse::class.java,
 ) {
 
+    override val supplierName = FlightSupplierName("TOUGH_JET")
+
     override fun queryParams(request: FlightSupplierRequest) = mapOf(
-        "from" to request.origin,
-        "to" to request.destination,
+        "from" to request.origin.value,
+        "to" to request.destination.value,
         "outboundDate" to request.departureDate.toString(),
         "inboundDate" to request.returnDate.toString(),
         "numberOfAdults" to request.numberOfPassengers.toString(),
